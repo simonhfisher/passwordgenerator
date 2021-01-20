@@ -32,7 +32,26 @@ def password_length_generator(password_length, list_of_words):
 
         password_list.append(password_generator(words_to_use_for_password_gen))
 
-    return "".join(password_list)
+    ###### OPTION ONE ######
+    ###### A loop to make something like: "HOUSECLIMBAFTERDRAMA" --> "HouseClimbAfterDrama"
+
+    for word in password_list:
+        word_starting_with_uppercase = word.title()
+        password_list.append(word_starting_with_uppercase)
+
+    ########################
+
+    ###### OPTION TWO ######
+    ###### A loop to generate new passwords when the user isn't happy with the suggestion
+
+    response = input("Are you happy with " + ("".join(password_list)) + " as your password? Type'yes' if so, or anything else to generate a new one:\n>>> ")
+
+    if response.lower() == "yes":
+        return "".join(password_list)
+    else:
+        return password_length_generator(password_length, list_of_words)
+        
+    ########################
 
     
 
