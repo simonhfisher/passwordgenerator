@@ -39,6 +39,8 @@ def password_length_generator(password_length, list_of_words):
         word_starting_with_uppercase = word.title()
         password_list.append(word_starting_with_uppercase)
 
+    return "".join(password_list)
+
     ########################
 
     ###### OPTION TWO ######
