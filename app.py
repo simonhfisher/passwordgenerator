@@ -4,39 +4,70 @@ import random
 
 def text_grabber(file_name): 
     
-    word_list=[]
+    word_dict= {}
 
     with open(file_name, "r") as file_to_read:
         reader = csv.reader(file_to_read)
 
+
         for data in reader:
             
-            word_list.append(data[0])
+            sorter(data[0],word_dict)
+            
+    print(word_dict)
+    return word_dict
 
-    return word_list
+
+def sorter(word,word_dict):
+
+    first_letter_of_word = word[0]    
+    if first_letter_of_word in word_dict.keys():       # the .keys is for readability and is not necessary
+        word_dict[first_letter_of_word].append(word)
+    else :
+        word_dict[first_letter_of_word] = [word] 
+
+
 
 def random_word_generator(word_list):
     length_of_word_list = len(word_list)
     random_number = random.randrange(length_of_word_list)
     random_word = word_list[random_number]
+    
+    return random_word
 
 
-    return random_word 
+def password_generator(password_length, dict_of_words, prevent_duplicates = True, use_acronym = None):
+
+    if type(use_acronym) == str :
+        password = password_generator_with_acronym(dict_of_words, use_acronym, prevent_duplicates)
+         
+
+    else :
+        password = password_generator_without_acronym(dict_of_words, password_length, prevent_duplicates)
+
+    return password   
 
 
-def password_generator(password_length, list_of_words, prevent_duplicates = True):
+def password_generator_with_acronym(word_dict, acronym, prevent_duplicates):
+    acronym_word_list = []
+    for letter in acronym:
+        individual_acronym_word = random_word_generator(word_dict[letter.upper()])
+        acronym_word_list.append(individual_acronym_word)
+    return acronym_word_list   
+
+
+def password_generator_without_acronym(word_dict, password_length, prevent_duplicates):
+    total_recall_list = []
+    for word_list in word_dict.values():
+        total_recall_list += word_list
 
     password_list = []
     for i in range(password_length) :
-        
-        random_word = (random_word_generator(list_of_words))
+    
+        random_word = (random_word_generator(word_list))
         password_list.append(random_word)
         if prevent_duplicates == True :
-            list_of_words.remove(random_word)
-
-
-
-
+            word_list.remove(random_word)
 
 
 
@@ -78,15 +109,18 @@ def password_generator(password_length, list_of_words, prevent_duplicates = True
 if __name__ == "__main__":
     
     words_to_use_for_password_gen = text_grabber("FiveLetterWordsGood.txt")
-    words_to_use_for_password_gen = ["GRIPE","BINGO","ROWDY","JOINT"]
-    print(password_generator(4,words_to_use_for_password_gen))
+    #words_to_use_for_password_gen = ["GRIPE","BINGO","ROWDY","JOINT"]
+    print(password_generator(4,words_to_use_for_password_gen, True, "x3!"))
 
 
     
  
- 
-#prevent word duplication 
+#password_generator(password_length, dict_of_words, prevent_duplicates = True, use_acronym = None)
+#prevent word duplication - done 
 #user can provide first letters of words eg C,A,K,E
 #provide the case 
 #searches for letters similar to numbers and replaces with those numbers
 #prints 10 passwords for user selection 
+
+
+# temp_word_list = copy.deepcopy(word_list)  how to possibly make a deep copy of a list
