@@ -53,64 +53,39 @@ def password_generator_with_acronym(word_dict, acronym, prevent_duplicates):
     for letter in acronym:
         individual_acronym_word = random_word_generator(word_dict[letter.upper()])
         acronym_word_list.append(individual_acronym_word)
+        if prevent_duplicates == True :
+            word_list.remove(random_word)
+
     return acronym_word_list   
 
 
 def password_generator_without_acronym(word_dict, password_length, prevent_duplicates):
-    total_recall_list = []
+    total_word_list = []
     for word_list in word_dict.values():
-        total_recall_list += word_list
+        total_word_list += word_list
 
     password_list = []
     for i in range(password_length) :
     
-        random_word = (random_word_generator(word_list))
+        random_word = (random_word_generator(total_word_list))
         password_list.append(random_word)
         if prevent_duplicates == True :
-            word_list.remove(random_word)
+            total_word_list.remove(random_word)
 
-
-
-
-
-
-
-
-
-
-
-    ###### OPTION ONE ######
-    ###### A loop to make something like: "HOUSECLIMBAFTERDRAMA" --> "HouseClimbAfterDrama"
-
-    #for word in password_list:
-    #    word_starting_with_uppercase = word.title()
-    #    password_list.append(word_starting_with_uppercase)
-
-    #return "".join(password_list)
-
-    ########################
-
-    ###### OPTION TWO ######
-    ###### A loop to generate new passwords when the user isn't happy with the suggestion
-
+    
     response = input("Are you happy with " + ("".join(password_list)) + " as your password? Type 'yes' if so, or anything else to generate a new one:\n>>> ")
 
     if response.lower() == "yes":
-        return "".join(password_list)
+        return password_list
     else:
-        return password_generator(password_length, list_of_words)
-        
-    ########################
-
-    
-
-    
+        return password_generator_without_acronym(word_dict, password_length, prevent_duplicates)
+           
 
 if __name__ == "__main__":
     
     words_to_use_for_password_gen = text_grabber("FiveLetterWordsGood.txt")
     #words_to_use_for_password_gen = ["GRIPE","BINGO","ROWDY","JOINT"]
-    print(password_generator(4,words_to_use_for_password_gen, True, "x3!"))
+    print(password_generator(4,words_to_use_for_password_gen, True, None))
 
 
     
@@ -121,6 +96,6 @@ if __name__ == "__main__":
 #provide the case 
 #searches for letters similar to numbers and replaces with those numbers
 #prints 10 passwords for user selection 
-
+# function that shows the amount of words beginning with a letter 
 
 # temp_word_list = copy.deepcopy(word_list)  how to possibly make a deep copy of a list
