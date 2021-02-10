@@ -11,7 +11,7 @@ def thing_weighter(list_, number_of_outputs):
 
     return (random.choices(list_, weights = weight_list, k = number_of_outputs))
     
-#sample_data = thing_weighter(my_list, 10000)   
+sample_data = thing_weighter(my_list, 10000)   
 
 
 def thing_weighter_counter(sample_data):
@@ -25,8 +25,6 @@ def thing_weighter_counter(sample_data):
 
     print(unique_word_dictionary)
 
-#thing_weighter_counter(sample_data)
+thing_weighter_counter(sample_data)
 
 
-while 1:
-    i=1

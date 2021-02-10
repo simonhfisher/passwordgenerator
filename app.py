@@ -9,12 +9,9 @@ def text_grabber(file_name):
     with open(file_name, "r") as file_to_read:
         reader = csv.reader(file_to_read)
 
-
         for data in reader:
-            
             sorter(data[0],word_dict)
             
-    print(word_dict)
     return word_dict
 
 
@@ -25,7 +22,6 @@ def sorter(word,word_dict):
         word_dict[first_letter_of_word].append(word)
     else :
         word_dict[first_letter_of_word] = [word] 
-
 
 
 def random_word_generator(word_list):
@@ -40,21 +36,29 @@ def password_generator(password_length, dict_of_words, prevent_duplicates = True
 
     if type(use_acronym) == str :
         password = password_generator_with_acronym(dict_of_words, use_acronym, prevent_duplicates)
-         
 
     else :
         password = password_generator_without_acronym(dict_of_words, password_length, prevent_duplicates)
 
-    return password   
+    if type(password) == str :
+        print_fail_message(password)
+        return None 
+
+    string_password = " ".join(password) 
+    print(string_password)    #temporary print
+    return string_password   
 
 
 def password_generator_with_acronym(word_dict, acronym, prevent_duplicates):
     acronym_word_list = []
     for letter in acronym:
-        individual_acronym_word = random_word_generator(word_dict[letter.upper()])
+        try:
+            individual_acronym_word = random_word_generator(word_dict[letter.upper()])
+        except:
+            return letter.upper()   
         acronym_word_list.append(individual_acronym_word)
         if prevent_duplicates == True :
-            word_list.remove(random_word)
+            word_dict[letter.upper()].remove(individual_acronym_word)
 
     return acronym_word_list   
 
@@ -79,16 +83,18 @@ def password_generator_without_acronym(word_dict, password_length, prevent_dupli
         return password_list
     else:
         return password_generator_without_acronym(word_dict, password_length, prevent_duplicates)
-           
+
+def print_fail_message(letter_not_present):
+
+    print(f"you have run out of {letter_not_present} words")
+
 
 if __name__ == "__main__":
     
     words_to_use_for_password_gen = text_grabber("FiveLetterWordsGood.txt")
     #words_to_use_for_password_gen = ["GRIPE","BINGO","ROWDY","JOINT"]
-    print(password_generator(4,words_to_use_for_password_gen, True, None))
-
-
-    
+    password_generator(4,words_to_use_for_password_gen, True, ("A"*30))
+   
  
 #password_generator(password_length, dict_of_words, prevent_duplicates = True, use_acronym = None)
 #prevent word duplication - done 

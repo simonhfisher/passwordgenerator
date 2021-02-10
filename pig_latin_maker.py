@@ -10,7 +10,7 @@ def pig_latin_maker(word):
 #print(pig_latin_maker("chicken"))  
 
 
-def pig_latin_sentence_fucker(words):
+def pig_latin_sentence_messer(words):
     output = " "
     list_made_from_input_string = (words.split()) 
     for word in list_made_from_input_string:
@@ -19,7 +19,7 @@ def pig_latin_sentence_fucker(words):
     return output.strip()    #strip is removing white space (leading or trailing spaces) - in this case the space after the last word
 
 
-print(pig_latin_sentence_fucker("fuckin chicken mate"))
+print(pig_latin_sentence_messer("funky chicken mate"))
 
     
 

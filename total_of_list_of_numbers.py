@@ -8,6 +8,15 @@ def number_totaller(list_):  #number_totaller takes one argument, in this case a
     return output            # return our variable
        
 
-print(number_totaller([1,2,3,4,5,6,7,8]))   #call of number_totaller 
+list_ = [1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8]
 
+
+print(number_totaller(list_))   #call of number_totaller 
 
